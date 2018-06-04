@@ -5,17 +5,16 @@ using UnityEngine;
 public class ShipAnimator : MonoBehaviour
 {
     private Animator animator;
-    // Use this for initialization
+    
     private void Start()
     {
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
+    
     private void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        Debug.Log(horizontal);
+        float horizontal = Input.GetAxis("Horizontal");        
         animator.SetFloat("dir",horizontal);
     }
 }
