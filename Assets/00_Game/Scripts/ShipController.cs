@@ -12,12 +12,19 @@ public class ShipController : MonoBehaviour {
 
     private void Update()
     {
+        Vector3 bulletStartPos = new Vector3(transform.position.x + bulletPostX, transform.position.y + bulletPosY, 0);
+
         if (Input.GetKeyDown(KeyCode.Space))
-            Instantiate(bullet, new Vector3(transform.position.x + bulletPostX, transform.position.y + bulletPosY, 0),Quaternion.identity);
+            Instantiate(bullet, bulletStartPos ,Quaternion.identity);
         
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        transform.position += new Vector3(horizontal * speed * Time.deltaTime, vertical * speed * Time.deltaTime, 0);
+        transform.position += new Vector3(horizontal * speed * Time.deltaTime, vertical * speed * Time.deltaTime, 0);                    
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "BoundWall")
+            Debug.Log("HOLA");
     }
 }
