@@ -10,4 +10,9 @@ public class Bullet : MonoBehaviour
     {
         transform.position += new Vector3(0, speed * Time.deltaTime, 0);
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "BoundWall")
+            Destroy(this.gameObject);
+    }
 }
