@@ -27,15 +27,10 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         currentState = state.MOVING;
-            
-    }
-    private void OnEnable()
-    {                
         Vector3 RandomInitialPos = new Vector3((Random.Range(minScreen, maxScreen)), maxScreen);
         initialPos = CameraController.Get().GetViewPort().ViewportToWorldPoint(RandomInitialPos);
         initialPos -= new Vector3(CameraController.Get().GetPosition().x, CameraController.Get().GetPosition().y);
     }
-
     private void Update()
     {        
         switch (currentState)
@@ -55,7 +50,7 @@ public class EnemyController : MonoBehaviour
                     }
                     else
                     {
-                        transform.position = (initialPos + new Vector3(CameraController.Get().GetPosition().x, CameraController.Get().GetPosition().y, CameraController.Get().GetPosition().z));
+                        transform.position = (initialPos + new Vector3(CameraController.Get().GetPosition().x, CameraController.Get().GetPosition().y, -CameraController.Get().GetPosition().z));
                         timer += Time.deltaTime;
 
                     }

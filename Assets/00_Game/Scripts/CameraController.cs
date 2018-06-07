@@ -29,10 +29,11 @@ public class CameraController : MonoBehaviour {
     void Update()
     {
         transform.position += new Vector3(0, speed * Time.deltaTime, 0);
+        cam.ViewportToScreenPoint(transform.position);
     }
     public float GetSpeed()
     {
-        return speed;
+        return speed * Time.deltaTime;
     }
     public Vector3 GetPosition()
     {

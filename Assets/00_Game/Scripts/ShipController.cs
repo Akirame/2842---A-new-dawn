@@ -22,6 +22,7 @@ public class ShipController : MonoBehaviour
     }
     private void Update()
     {
+        transform.position += new Vector3(0, CameraController.Get().GetSpeed(), 0);
         Vector3 bulletStartPos = new Vector3(transform.position.x + bulletPosX, transform.position.y + bulletPosY, 0);        
         if (Input.GetKeyDown(KeyCode.Space))
             for (int i = 0; i < bulletRange; i++)
