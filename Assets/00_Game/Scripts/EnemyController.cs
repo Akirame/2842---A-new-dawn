@@ -2,13 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Directions
-{
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT
-}
 
 enum state
 {
@@ -19,49 +12,59 @@ enum state
 
 public class EnemyController : MonoBehaviour
 {
-    public Directions ComingFromDirection;
+    
     public float speed;
     public float waitTime;
-    public GameObject cam;
+    public Vector3 initialPos;
+    public Vector3 endPos;
+    public AnimationCurve movementCurve;            
     private state currentState;
     private float timer;
-    public Vector3 pos1;
-    public Vector3 pos2;
-    public AnimationCurve ac;
-    bool isRunning = false;
+    private bool isRunning = false;
+    private float maxScreen = 0.9f;
+    private float minScreen = 0.1f;
 
     private void Start()
     {
-        Vector3 RandomInitialPos = new Vector3(Random.Range(cam.transform.position.x, cam.transform.position.x + 10), cam.transform.position.y - 1);
         currentState = state.MOVING;
-        pos1 = RandomInitialPos;
+            
+    }
+    private void OnEnable()
+    {                
+        Vector3 RandomInitialPos = new Vector3((Random.Range(minScreen, maxScreen)), maxScreen);
+        initialPos = CameraController.Get().GetViewPort().ViewportToWorldPoint(RandomInitialPos);
+        initialPos -= new Vector3(CameraController.Get().GetPosition().x, CameraController.Get().GetPosition().y);
     }
 
     private void Update()
-    {
+    {        
         switch (currentState)
         {
             case state.MOVING:
                 if (!isRunning)
-                    StartCoroutine(Move(transform.position, pos1, ac, waitTime));
+                    StartCoroutine(Move(transform.position, initialPos, movementCurve, waitTime));
                 break;
             case state.SHOOT:
                 {
                     if (timer > waitTime)
                     {
                         currentState = state.AFTERSHOOT;
-                        Vector3 RandomEndPos = new Vector3(Random.Range(cam.transform.position.x + 1, cam.transform.position.x + 10), cam.transform.position.y - 20);
-                        pos2 = RandomEndPos;
+                        Vector3 RandomEndPos = new Vector3((Random.Range(minScreen, maxScreen)), maxScreen - 5);                        
+                        endPos = RandomEndPos;
                         timer = 0.0f;
                     }
                     else
+                    {
+                        transform.position = (initialPos + new Vector3(CameraController.Get().GetPosition().x, CameraController.Get().GetPosition().y, CameraController.Get().GetPosition().z));
                         timer += Time.deltaTime;
+
+                    }
                 }
                 break;
             case state.AFTERSHOOT:
                 {
                     if(!isRunning)
-                    StartCoroutine(Move(transform.position, pos2, ac, waitTime));                    
+                    StartCoroutine(Move(transform.position, endPos, movementCurve, waitTime));                    
                 }
                 break;
         }
@@ -78,12 +81,13 @@ public class EnemyController : MonoBehaviour
     IEnumerator Move(Vector3 pos1, Vector3 pos2, AnimationCurve ac, float time)
     {
         isRunning = true;        
-        pos1 += new Vector3(cam.transform.position.x, cam.transform.position.y);
-        pos2 += new Vector3(cam.transform.position.x, cam.transform.position.y);
-        
         while (timer <= time)
         {
-            transform.position = Vector3.Lerp(pos1, pos2, ac.Evaluate(timer / time));
+            Vector3 camPos = new Vector3(CameraController.Get().GetPosition().x, CameraController.Get().GetPosition().y);           
+            if(currentState == state.MOVING)
+            transform.position = Vector3.Lerp(pos1 + camPos, pos2 + camPos, ac.Evaluate(timer / time));
+            else if (currentState == state.AFTERSHOOT)
+                transform.position = Vector3.Lerp(pos1 , pos2 , ac.Evaluate(timer / time));
             timer += Time.deltaTime;
             yield return null;
         }
