@@ -2,26 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour {
-
-    private static CameraController instance;
-    public static CameraController Get()
-    {
-        return instance;
-    }
+public class CameraController : MonoBehaviourSingleton<CameraController> {
 
     private Camera cam;
 
     private void Start()
     {
         cam = GetComponent<Camera>();
-    }
-    private void Awake()
-    {
-        if (!instance)
-            instance = this;
-        else
-            Destroy(this.gameObject);
     }
 
     public float speed = 1;

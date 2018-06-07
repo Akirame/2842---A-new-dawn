@@ -31,6 +31,13 @@ public class EnemyController : MonoBehaviour
         initialPos = CameraController.Get().GetViewPort().ViewportToWorldPoint(RandomInitialPos);
         initialPos -= new Vector3(CameraController.Get().GetPosition().x, CameraController.Get().GetPosition().y);
     }
+
+    private void LateUpdate()
+    {
+        // lock z
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+    }
+
     private void Update()
     {        
         switch (currentState)
@@ -50,7 +57,7 @@ public class EnemyController : MonoBehaviour
                     }
                     else
                     {
-                        transform.position = (initialPos + new Vector3(CameraController.Get().GetPosition().x, CameraController.Get().GetPosition().y, -CameraController.Get().GetPosition().z));
+                        transform.position = (initialPos + new Vector3(CameraController.Get().GetPosition().x, CameraController.Get().GetPosition().y));
                         timer += Time.deltaTime;
 
                     }
@@ -61,8 +68,8 @@ public class EnemyController : MonoBehaviour
                     if(!isRunning)
                     StartCoroutine(Move(transform.position, endPos, movementCurve, waitTime));                    
                 }
-                break;
-        }
+                break;                
+        }        
     }
 
     /// <summary>
