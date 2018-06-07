@@ -31,14 +31,24 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         else
             AddScore(100);
     }
+
     public void AddScore(int _score)
     {
         score += _score;
+    }
+
+    public void AddEnergy()
+    {
+        if (energy < 100)
+            energy += 25;
+        else
+            AddScore(100);
     }
     public void ReduceEnergy()
     {
         energy -= 25;
     }
+
     public bool GameOver()
     {
         if (energy < 0)

@@ -17,7 +17,9 @@ public class EnemyController : MonoBehaviour
     public float waitTime;
     public Vector3 initialPos;
     public Vector3 endPos;
-    public AnimationCurve movementCurve;            
+    public AnimationCurve movementCurve;
+    public GameObject PowerUp;
+
     private state currentState;
     private float timer;
     private bool isRunning = false;
@@ -70,8 +72,7 @@ public class EnemyController : MonoBehaviour
                 }
                 break;                
         }        
-    }
-
+    }    
     /// <summary>
     /// Mover el sprite de forma suave
     /// </summary>
@@ -105,6 +106,14 @@ public class EnemyController : MonoBehaviour
         }
         isRunning = false;
         timer = 0.0f;        
+    }
+
+    private void OnDestroy()
+    {
+        if (Random.Range(0f, 100f) > 10f)
+        {
+            Instantiate(PowerUp, this.transform.position, Quaternion.identity);
+        }
     }
 }
 
