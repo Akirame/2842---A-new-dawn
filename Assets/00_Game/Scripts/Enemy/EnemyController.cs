@@ -142,11 +142,11 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Bomb")
         {
-            if (Random.Range(0f, 100f) > 80f)
+            if (Random.Range(0f, 100f) > 90f)
             {
                 Instantiate(PowerUp, this.transform.position, Quaternion.identity);
             }
-            if (Random.Range(0f, 100f) > 50f)
+            if (Random.Range(0f, 100f) > 70f)
             {
                 Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
             }

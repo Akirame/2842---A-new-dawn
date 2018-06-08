@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public void ReduceEnergy()
     {
         energy -= 25;
+        shootRange = 1;
     }
     public float GetEnergy()
     {
