@@ -7,6 +7,8 @@ TagManager:
   - BoundWall
   - Bullet
   - Enemy
+  - Explosion
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX

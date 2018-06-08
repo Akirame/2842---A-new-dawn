@@ -12,13 +12,15 @@ enum state
 
 public class EnemyController : MonoBehaviour
 {
-    
+
     public float speed;
     public float waitTime;
     public Vector3 initialPos;
     public Vector3 endPos;
     public AnimationCurve movementCurve;
     public GameObject PowerUp;
+    public GameObject explosionPrefab;
+    public GameObject bullet;
 
     private state currentState;
     private float timer;
@@ -38,10 +40,15 @@ public class EnemyController : MonoBehaviour
     {
         // lock z
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+
+        //look at player
+        Vector3 dir = ShipController.Get().transform.position - transform.position;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
     }
 
     private void Update()
-    {        
+    {
         switch (currentState)
         {
             case state.MOVING:
@@ -52,8 +59,9 @@ public class EnemyController : MonoBehaviour
                 {
                     if (timer > waitTime)
                     {
+                        Instantiate(bullet, this.transform.position, Quaternion.identity);
                         currentState = state.AFTERSHOOT;
-                        Vector3 RandomEndPos = new Vector3((Random.Range(minScreen, maxScreen)), maxScreen - 5);                        
+                        Vector3 RandomEndPos = new Vector3((Random.Range(minScreen, maxScreen)), maxScreen - 5);
                         endPos = RandomEndPos;
                         timer = 0.0f;
                     }
@@ -67,12 +75,12 @@ public class EnemyController : MonoBehaviour
                 break;
             case state.AFTERSHOOT:
                 {
-                    if(!isRunning)
-                    StartCoroutine(Move(transform.position, endPos, movementCurve, waitTime));                    
+                    if (!isRunning)
+                        StartCoroutine(Move(transform.position, endPos, movementCurve, waitTime));
                 }
-                break;                
-        }        
-    }    
+                break;
+        }
+    }
     /// <summary>
     /// Mover el sprite de forma suave
     /// </summary>
@@ -83,14 +91,14 @@ public class EnemyController : MonoBehaviour
     /// <returns></returns>
     IEnumerator Move(Vector3 pos1, Vector3 pos2, AnimationCurve ac, float time)
     {
-        isRunning = true;        
+        isRunning = true;
         while (timer <= time)
         {
-            Vector3 camPos = new Vector3(CameraController.Get().GetPosition().x, CameraController.Get().GetPosition().y);           
-            if(currentState == state.MOVING)
-            transform.position = Vector3.Lerp(pos1 + camPos, pos2 + camPos, ac.Evaluate(timer / time));
+            Vector3 camPos = new Vector3(CameraController.Get().GetPosition().x, CameraController.Get().GetPosition().y);
+            if (currentState == state.MOVING)
+                transform.position = Vector3.Lerp(pos1 + camPos, pos2 + camPos, ac.Evaluate(timer / time));
             else if (currentState == state.AFTERSHOOT)
-                transform.position = Vector3.Lerp(pos1 , pos2 , ac.Evaluate(timer / time));
+                transform.position = Vector3.Lerp(pos1, pos2, ac.Evaluate(timer / time));
             timer += Time.deltaTime;
             yield return null;
         }
@@ -105,14 +113,21 @@ public class EnemyController : MonoBehaviour
                 break;
         }
         isRunning = false;
-        timer = 0.0f;        
+        timer = 0.0f;
     }
 
-    private void OnDestroy()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Random.Range(0f, 100f) > 10f)
+        if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Bomb")
         {
-            Instantiate(PowerUp, this.transform.position, Quaternion.identity);
+            if (Random.Range(0f, 100f) > 70f)
+            {
+                Instantiate(PowerUp, this.transform.position, Quaternion.identity);
+            }
+            if (Random.Range(0f, 100f) > 50f)
+            {
+                Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
+            }
         }
     }
 }

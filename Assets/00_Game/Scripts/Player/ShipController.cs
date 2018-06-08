@@ -5,10 +5,12 @@ using UnityEngine;
 public class ShipController : MonoBehaviourSingleton<ShipController>
 {
     public GameObject bullet;
+    public GameObject bomb;
     public int bulletPosX;
     public int bulletPosY;    
     public float bulletSpacing;
     public float speed;
+    public float timerBomb = 3;
 
     private GameObject bulletGroup;    
 
@@ -32,7 +34,7 @@ public class ShipController : MonoBehaviourSingleton<ShipController>
     {
         Vector3 bulletStartPos = new Vector3(transform.position.x + bulletPosX, transform.position.y + bulletPosY, 0);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.J))
             for (int i = 0; i < GameManager.Get().GetRange(); i++)
             {
                 Instantiate(bullet, bulletStartPos, Quaternion.identity, bulletGroup.transform);
@@ -43,7 +45,10 @@ public class ShipController : MonoBehaviourSingleton<ShipController>
                     Instantiate(bullet, (bulletStartPos - bulletRangePos), Quaternion.identity, bulletGroup.transform);
                 }
             }
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(bomb, this.transform.position, Quaternion.identity);            
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
