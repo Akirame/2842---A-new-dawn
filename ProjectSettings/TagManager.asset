@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Explosion
   - EnemyBullet
+  - Bomb
   layers:
   - Default
   - TransparentFX

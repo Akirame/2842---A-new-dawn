@@ -7,13 +7,16 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     private int score;
     private int shootRange;
     private float energy;
+    private int bombCant;
 
     private void Start()
     {
         score = 0;
         shootRange = 1;
         energy = 100;
+        bombCant = 2;
     }
+
     private void Update()
     {
         if (GameOver())
@@ -26,7 +29,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     }
     public void AddRange()
     {
-        if (shootRange < 5)
+        if (shootRange < 4)
             shootRange++;
         else
             AddScore(100);
@@ -35,6 +38,10 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public void AddScore(int _score)
     {
         score += _score;
+    }
+    public int GetScore()
+    {
+        return score;
     }
 
     public void AddEnergy()
@@ -47,6 +54,25 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public void ReduceEnergy()
     {
         energy -= 25;
+    }
+    public float GetEnergy()
+    {
+        return energy;
+    }
+
+    public bool BombOK()
+    {
+        if (bombCant > 0)
+        {
+            bombCant--;
+            return true;
+        }
+        else
+            return false;
+    }
+    public int GetBombCant()
+    {
+        return bombCant;
     }
 
     public bool GameOver()

@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class ExplosionController : MonoBehaviour
 {
-            
-    private void Update()
+    public void EndAnim()
     {
-        if (transform.childCount == 0)
-        {
-            Destroy(this.gameObject);
-        }
+        Destroy(this.gameObject);
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Enemy")
         {
             Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.tag == "Player")
+        {
+            GameManager.Get().ReduceEnergy();
         }
     }
 }

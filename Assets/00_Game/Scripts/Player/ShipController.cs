@@ -12,19 +12,21 @@ public class ShipController : MonoBehaviourSingleton<ShipController>
     public float speed;
     public float timerBomb = 3;
 
-    private GameObject bulletGroup;    
+    private Animator animator;
+    private GameObject bulletGroup;
 
     private void Start()
-    {        
-        bulletGroup = new GameObject("Bullets");                
+    {
+        bulletGroup = new GameObject("Bullets");
+        animator = GetComponent<Animator>();
     }
     private void Update()
     {
         transform.position += new Vector3(0, CameraController.Get().GetSpeed(), 0);
 
         Shoot();
-
         float horizontal = Input.GetAxis("Horizontal");
+        animator.SetFloat("dir", horizontal);
         float vertical = Input.GetAxis("Vertical");
 
         transform.position += new Vector3(horizontal * speed * Time.deltaTime, vertical * speed * Time.deltaTime, 0);
@@ -32,11 +34,13 @@ public class ShipController : MonoBehaviourSingleton<ShipController>
     
     private void Shoot()
     {
+        
         Vector3 bulletStartPos = new Vector3(transform.position.x + bulletPosX, transform.position.y + bulletPosY, 0);
 
         if (Input.GetKeyDown(KeyCode.J))
+        {            
             for (int i = 0; i < GameManager.Get().GetRange(); i++)
-            {
+            {                
                 Instantiate(bullet, bulletStartPos, Quaternion.identity, bulletGroup.transform);
                 if (GameManager.Get().GetRange() > 1)
                 {
@@ -44,13 +48,17 @@ public class ShipController : MonoBehaviourSingleton<ShipController>
                     Instantiate(bullet, (bulletStartPos + bulletRangePos), Quaternion.identity, bulletGroup.transform);
                     Instantiate(bullet, (bulletStartPos - bulletRangePos), Quaternion.identity, bulletGroup.transform);
                 }
-            }
-        if (Input.GetKeyDown(KeyCode.Space))
+            }            
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && GameManager.Get().BombOK())
         {
             Instantiate(bomb, this.transform.position, Quaternion.identity);            
         }
     }
-
+    public void EndShoot()
+    {
+        animator.SetBool("shooting", false);
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Enemy")
