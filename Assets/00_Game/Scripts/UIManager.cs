@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviourSingleton<UIManager>
 {
    
     public Text bombText;
@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour
         energy = GameManager.Get().GetEnergy();
         bombCant = GameManager.Get().GetBombCant();                
         score = GameManager.Get().GetScore();
-
+        
         DrawBombText();
         DrawScoreText();
     }
@@ -26,19 +26,19 @@ public class UIManager : MonoBehaviour
     {
         CheckBomb();
         CheckScore();
-        DrawEnergy();
+        CheckEnergy();
     }
 
     private void DrawBombText()
     {
         bombText.text = ("x" + GameManager.Get().GetBombCant());
     }
-    private void DrawEnergy()
+    private void CheckEnergy()
     {
         if (energy != GameManager.Get().GetEnergy())
         {
-            energySlider.value = energy / 100;
             energy = GameManager.Get().GetEnergy();
+            energySlider.value = energy / 100;            
         }
     }
     private void DrawScoreText()
