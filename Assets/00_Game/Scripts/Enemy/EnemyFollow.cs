@@ -10,15 +10,35 @@ public enum goTo
 
 public class EnemyFollow : MonoBehaviour
 {    
-    // put the points from unity interface
-    public Transform[] wayPointList;
+    // put the points from unity interface    
     private Transform[] wayFollow = new Transform[3];
+    private GameObject waypoint1;
+    private GameObject waypoint2;
+    private GameObject waypoint3;
+    private GameObject waypoint4;
+    private GameObject waypoint5;
+    private GameObject waypoint6;
+    public GameObject PowerUp;
+    public GameObject explosionPrefab;
+    public GameObject bullet;
     public goTo direction;
-
     public int currentWayPoint = 0;
-    Transform targetWayPoint;
-
     public float speed = 4f;
+    public float waitTime = 3f;
+
+    private Transform targetWayPoint;
+    private float timer;    
+
+
+    private void Awake()
+    {
+        waypoint1 = GameObject.Find("Waypoint1");
+        waypoint2 = GameObject.Find("Waypoint2");
+        waypoint3 = GameObject.Find("Waypoint3");
+        waypoint4 = GameObject.Find("Waypoint4");
+        waypoint5 = GameObject.Find("Waypoint5");
+        waypoint6 = GameObject.Find("Waypoint6");
+    }
 
     // Use this for initialization
     private void Start()
@@ -26,20 +46,32 @@ public class EnemyFollow : MonoBehaviour
         switch (direction)
         {
             case goTo.LEFT_TORIGHT:
-                wayFollow[0] = wayPointList[0];
-                wayFollow[1] = wayPointList[1];
-                wayFollow[2] = wayPointList[2];
-                break;
-            case goTo.RIGHT_TOLEFT:
-                wayFollow[0] = wayPointList[3];
-                wayFollow[1] = wayPointList[4];
-                wayFollow[2] = wayPointList[5];
+                wayFollow[0] = waypoint1.transform;
+                wayFollow[1] = waypoint2.transform;
+                wayFollow[2] = waypoint3.transform;
+                break;                  
+            case goTo.RIGHT_TOLEFT:     
+                wayFollow[0] = waypoint4.transform;
+                wayFollow[1] = waypoint5.transform;
+                wayFollow[2] = waypoint6.transform;
                 break;
         }
+        timer = 0;
     }
     // Update is called once per frame
     private void Update()
     {
+        if (timer >= waitTime)
+        {
+            if (Random.Range(0f, 100f) > 50f)
+            {
+                Instantiate(bullet, this.transform.position, Quaternion.identity);
+            }
+            timer = 0;
+        }
+        else
+            timer += Time.deltaTime;
+
         // check if we have somewere to walk
         if (currentWayPoint < this.wayFollow.Length)
         {
@@ -61,11 +93,19 @@ public class EnemyFollow : MonoBehaviour
             targetWayPoint = wayFollow[currentWayPoint];
         }
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Bomb")
         {
-            GameManager.Get().ReduceEnergy();
+            if (Random.Range(0f, 100f) > 70f)
+            {
+                Instantiate(PowerUp, this.transform.position, Quaternion.identity);
+            }
+            if (Random.Range(0f, 100f) > 90f)
+            {
+                Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
+            }         
         }
         if (collision.gameObject.tag == "BoundWallBottom")
             Destroy(this.gameObject);

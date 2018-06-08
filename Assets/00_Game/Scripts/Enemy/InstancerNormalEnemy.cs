@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Instancer : MonoBehaviour {
+public class InstancerNormalEnemy : MonoBehaviour {
 
     public GameObject toInstance;
 

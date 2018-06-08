@@ -131,6 +131,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 1763414074602880, guid: ac63cea3d6203ff4197d2860a7344a3d,
     type: 2}
   bullet: {fileID: 1626637986610456, guid: a1db2a44ecbc03a4c9021c866dc77b59, type: 2}
+  _type: 0
 --- !u!212 &212268193927113348
 SpriteRenderer:
   m_ObjectHideFlags: 1

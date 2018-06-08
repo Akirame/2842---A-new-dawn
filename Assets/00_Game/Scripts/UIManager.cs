@@ -40,6 +40,7 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
             energy = GameManager.Get().GetEnergy();
             energySlider.value = energy / 100;            
         }
+        
     }
     private void DrawScoreText()
     {
