@@ -7,8 +7,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     private int score;
     private int shootRange;
     private int bombCant;
-    private float energy;
-    private bool playing;
+    private float energy;    
     private bool deathOn;
 
     private void Start()
@@ -19,7 +18,6 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         bombCant = 2;
 
         deathOn = false;
-        playing = false;
     }
 
     private void Update()
