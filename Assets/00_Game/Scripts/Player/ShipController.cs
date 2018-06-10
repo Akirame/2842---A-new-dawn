@@ -10,14 +10,15 @@ public class ShipController : MonoBehaviourSingleton<ShipController>
     public int bulletPosY;    
     public float bulletSpacing;
     public float speed;
-    public float timerBomb = 3;
+    public float timerBomb = 3;    
+
 
     private Animator animator;
-    private GameObject bulletGroup;
+    private AudioSource shootSound;
 
     private void Start()
     {
-        bulletGroup = new GameObject("Bullets");
+        shootSound = GetComponent<AudioSource>();        
         animator = GetComponent<Animator>();
     }
     private void Update()
@@ -38,15 +39,16 @@ public class ShipController : MonoBehaviourSingleton<ShipController>
         Vector3 bulletStartPos = new Vector3(transform.position.x + bulletPosX, transform.position.y + bulletPosY, 0);
 
         if (Input.GetKeyDown(KeyCode.J))
-        {            
+        {
+            shootSound.PlayOneShot(shootSound.clip,0.50f);            
             for (int i = 0; i < GameManager.Get().GetRange(); i++)
             {                
-                Instantiate(bullet, bulletStartPos, Quaternion.identity, bulletGroup.transform);
+                Instantiate(bullet, bulletStartPos, Quaternion.identity, BulletGroup.Get().transform);
                 if (GameManager.Get().GetRange() > 1)
                 {
                     Vector3 bulletRangePos = new Vector3(i * bulletSpacing, 0);
-                    Instantiate(bullet, (bulletStartPos + bulletRangePos), Quaternion.identity, bulletGroup.transform);
-                    Instantiate(bullet, (bulletStartPos - bulletRangePos), Quaternion.identity, bulletGroup.transform);
+                    Instantiate(bullet, (bulletStartPos + bulletRangePos), Quaternion.identity, BulletGroup.Get().transform);
+                    Instantiate(bullet, (bulletStartPos - bulletRangePos), Quaternion.identity, BulletGroup.Get().transform);
                 }
             }            
         }

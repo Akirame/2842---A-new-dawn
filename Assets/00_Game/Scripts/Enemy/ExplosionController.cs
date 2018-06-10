@@ -10,10 +10,6 @@ public class ExplosionController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
-        {
-            Destroy(collision.gameObject);
-        }
         if (collision.gameObject.tag == "Player")
         {
             GameManager.Get().ReduceEnergy();

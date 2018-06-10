@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    private SpriteRenderer rend;
-    private float timer = 0;
     public float time = 5;
     public AnimationCurve ac;
+    public AudioClip bombSound;
+
+    private SpriteRenderer rend;
+    private float timer = 0;
     private bool isRunning = false;
-    Color tmp;
+    private Color tmp;
+
+    private void Awake()
+    {
+        AudioSource.PlayClipAtPoint(bombSound, CameraController.Get().transform.position, 1);
+    }
 
     private void Start()
     {

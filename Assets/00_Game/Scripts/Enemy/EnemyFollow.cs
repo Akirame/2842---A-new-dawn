@@ -96,9 +96,9 @@ public class EnemyFollow : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Bomb")
+        if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Bomb" || collision.gameObject.tag == "Explosion")
         {
-            if (Random.Range(0f, 100f) > 90f)
+            if (Random.Range(0f, 100f) > 95f)
             {
                 Instantiate(PowerUp, this.transform.position, Quaternion.identity);
             }

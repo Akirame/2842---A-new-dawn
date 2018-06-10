@@ -8,12 +8,16 @@ enum Powers{
 }
 public class PowerUp : MonoBehaviour {
 
-    private Powers pow;    
     public GameObject HealSprite;
     public GameObject RangeSprite;
-    float timer;
+    public AudioClip powerSound;
+
+    private Powers pow;    
+    private float timer;
+
+
 	void Start ()
-    {               
+    {        
         pow = (Powers)Random.Range(0,2);
         switch (pow)
         {
@@ -37,6 +41,7 @@ public class PowerUp : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
+            AudioSource.PlayClipAtPoint(powerSound, CameraController.Get().transform.position,1);
             switch (pow)
             {
                 case Powers.HEAL:
