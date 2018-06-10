@@ -1,16 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public enum Scenes{
-    MENU,
-    LEVEL1,
+
+public enum Scenes
+{        
     LEVEL2,
-    END
+    FINAL
 }
-public class SceneController : MonoBehaviour
-{
+
+public class LevelEnd : MonoBehaviour {
+
     public Scenes scene;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -19,11 +19,11 @@ public class SceneController : MonoBehaviour
         {
             switch (scene)
             {
-                case Scenes.LEVEL1:
-                    UnityEngine.SceneManagement.SceneManager.LoadScene(1);
-                    break;
                 case Scenes.LEVEL2:
-                    UnityEngine.SceneManagement.SceneManager.LoadScene(3);
+                    LoaderManager.Get().LoadScene("Level2");
+                    break;
+                case Scenes.FINAL:
+                    LoaderManager.Get().LoadScene("FinalMenu");
                     break;
             }
         }

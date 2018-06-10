@@ -1999,9 +1999,31 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1829458020740358, guid: 1712db0267dc9274a8b963148bf55889, type: 2}
+      propertyPath: m_Name
+      value: LevelEnd
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114744824197742648, guid: 1712db0267dc9274a8b963148bf55889, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 1712db0267dc9274a8b963148bf55889, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1978079979 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1829458020740358, guid: 1712db0267dc9274a8b963148bf55889,
+    type: 2}
+  m_PrefabInternal: {fileID: 1978079978}
+--- !u!114 &1978079980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1978079979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5383b73415abfe4459046e4d509eff05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scene: 0
 --- !u!1001 &2043354115
 Prefab:
   m_ObjectHideFlags: 0
