@@ -222,6 +222,8 @@ MonoBehaviour:
   bulletSpacing: 0.5
   speed: 5
   timerBomb: 3
+  deathSound: {fileID: 8300000, guid: e8eb0df6809242e48b44c0f3ec03ccdc, type: 3}
+  hurtSound: {fileID: 8300000, guid: 708e50760f8af9446b7b4ee0eed4efad, type: 3}
 --- !u!114 &114381152007426520
 MonoBehaviour:
   m_ObjectHideFlags: 1
