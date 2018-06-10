@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviourSingleton<CameraController> {
+public class CameraController : MonoBehaviourSingleton<CameraController>
+{
 
     private Camera cam;
 
@@ -35,10 +36,14 @@ public class CameraController : MonoBehaviourSingleton<CameraController> {
     }
     public void ResetPos()
     {
-        transform.position = new Vector3(0, 0,-10);
+        transform.position = new Vector3(0, 0, -10);
     }
     public void Deactivate()
     {
         transform.GetChild(0).transform.gameObject.SetActive(false);
+    }
+    public void Activate()
+    {        
+        transform.GetChild(0).transform.gameObject.SetActive(true);
     }
 }

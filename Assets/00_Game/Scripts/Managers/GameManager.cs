@@ -113,9 +113,12 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         deathOn = true;
         ShipController.Get().OnDeath();
         CameraController.Get().Deactivate();
-        yield return new WaitForSeconds(5);
-        Destroy(ShipController.Get().transform.gameObject);
-        Destroy(CameraController.Get().transform.gameObject);
+        yield return new WaitForSeconds(5);        
         LoaderManager.Get().LoadScene("MainMenu");
+        yield return null;
+        ShipController.Get().Revive();
+        CameraController.Get().Activate();
+        ChangeLevel();
+        deathOn = false;
     }
 }

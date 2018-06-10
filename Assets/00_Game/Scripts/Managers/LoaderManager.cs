@@ -31,7 +31,6 @@ public class LoaderManager : MonoBehaviourSingleton<LoaderManager>
         loadingProgress = 0;
         timeLoading = 0;
         yield return null;
-
         AsyncOperation ao = SceneManager.LoadSceneAsync(scene);
         ao.allowSceneActivation = false;
 

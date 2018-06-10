@@ -12,6 +12,7 @@ public class ShipController : MonoBehaviourSingleton<ShipController>
     public float speed;
     public float timerBomb = 3;
     public AudioClip deathSound;
+    public AudioClip hurtSound;
 
     private bool alive;
     private Animator animator;
@@ -85,10 +86,19 @@ public class ShipController : MonoBehaviourSingleton<ShipController>
         collider.gameObject.SetActive(false);
         AudioSource.PlayClipAtPoint(deathSound, CameraController.Get().transform.position, 0.80f);
     }
+    public void Revive()
+    {
+        alive = true;
+        SpriteRenderer spr = GetComponent<SpriteRenderer>();
+        spr.gameObject.SetActive(true);
+        BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        collider.gameObject.SetActive(true);        
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
         {
+            AudioSource.PlayClipAtPoint(hurtSound, CameraController.Get().transform.position, 1f);
             GameManager.Get().ReduceEnergy();
         }
     }
