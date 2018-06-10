@@ -17,6 +17,7 @@ public class LevelEnd : MonoBehaviour {
     {
         if (collision.gameObject.tag == "BoundWall")
         {
+            GameManager.Get().ChangeLevel();
             switch (scene)
             {
                 case Scenes.LEVEL2:

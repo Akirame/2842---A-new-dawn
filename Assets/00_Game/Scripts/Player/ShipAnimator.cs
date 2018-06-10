@@ -14,7 +14,7 @@ public class ShipAnimator : MonoBehaviour
     
     private void Update()
     {
-        if (GameManager.Get().Playing())
+        if (GameManager.Get().Playing() && ShipController.Get().Alive())
         {
             float horizontal = Input.GetAxis("Horizontal");
             animator.SetFloat("dir", horizontal);

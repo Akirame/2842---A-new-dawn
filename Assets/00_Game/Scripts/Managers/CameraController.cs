@@ -20,7 +20,6 @@ public class CameraController : MonoBehaviourSingleton<CameraController> {
             transform.position += new Vector3(0, speed * Time.deltaTime, 0);
             cam.ViewportToScreenPoint(transform.position);
         }
-
     }
     public float GetSpeed()
     {
@@ -33,5 +32,13 @@ public class CameraController : MonoBehaviourSingleton<CameraController> {
     public Camera GetViewPort()
     {
         return cam;
+    }
+    public void ResetPos()
+    {
+        transform.position = new Vector3(0, 0,-10);
+    }
+    public void Deactivate()
+    {
+        transform.GetChild(0).transform.gameObject.SetActive(false);
     }
 }

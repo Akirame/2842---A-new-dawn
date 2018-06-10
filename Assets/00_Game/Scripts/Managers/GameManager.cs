@@ -6,8 +6,10 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 {
     private int score;
     private int shootRange;
-    private float energy;
     private int bombCant;
+    private float energy;
+    private bool playing;
+    private bool deathOn;
 
     private void Start()
     {
@@ -15,23 +17,18 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         shootRange = 1;
         energy = 100;
         bombCant = 2;
+
+        deathOn = false;
+        playing = false;
     }
 
     private void Update()
     {
-        if (GameOver())
-            Debug.Log("end");
+        if (GameOver() && !deathOn)
+            StartCoroutine(playerDeath());
     }
 
-    public bool Playing()
-    {
-        if (LoaderManager.Get().OnLevel())
-        {
-            return true;
-        }
-        else
-            return false;
-    }
+
     public int GetRange()
     {
         return shootRange;
@@ -56,13 +53,13 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public void AddEnergy()
     {
         if (energy < 100)
-            energy += 25;
+            energy += 20;
         else
             AddScore(100);
     }
     public void ReduceEnergy()
     {
-        energy -= 25;
+        energy -= 20;
         shootRange = 1;
     }
     public float GetEnergy()
@@ -85,12 +82,40 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         return bombCant;
     }
 
+    public bool Playing()
+    {
+        if (LoaderManager.Get().OnLevel())
+        {
+            return true;
+        }
+        else
+            return false;
+    }
     public bool GameOver()
     {
-        if (energy < 0)
+        if (energy <= 0)
         {
             return true;
         }
         return false;
+    }
+    public void ChangeLevel()
+    {
+        energy = 100;
+        bombCant = 2;
+        shootRange = 1;
+        ShipController.Get().ResetPos();
+        CameraController.Get().ResetPos();
+    }
+
+    IEnumerator playerDeath()
+    {
+        deathOn = true;
+        ShipController.Get().OnDeath();
+        CameraController.Get().Deactivate();
+        yield return new WaitForSeconds(5);
+        Destroy(ShipController.Get().transform.gameObject);
+        Destroy(CameraController.Get().transform.gameObject);
+        LoaderManager.Get().LoadScene("MainMenu");
     }
 }
