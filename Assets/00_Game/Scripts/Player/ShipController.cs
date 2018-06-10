@@ -23,14 +23,17 @@ public class ShipController : MonoBehaviourSingleton<ShipController>
     }
     private void Update()
     {
-        transform.position += new Vector3(0, CameraController.Get().GetSpeed(), 0);
+        if (GameManager.Get().Playing())
+        {
+            transform.position += new Vector3(0, CameraController.Get().GetSpeed(), 0);
 
-        Shoot();
-        float horizontal = Input.GetAxis("Horizontal");
-        animator.SetFloat("dir", horizontal);
-        float vertical = Input.GetAxis("Vertical");
+            Shoot();
+            float horizontal = Input.GetAxis("Horizontal");
+            animator.SetFloat("dir", horizontal);
+            float vertical = Input.GetAxis("Vertical");
 
-        transform.position += new Vector3(horizontal * speed * Time.deltaTime, vertical * speed * Time.deltaTime, 0);
+            transform.position += new Vector3(horizontal * speed * Time.deltaTime, vertical * speed * Time.deltaTime, 0);
+        }
     }
     
     private void Shoot()

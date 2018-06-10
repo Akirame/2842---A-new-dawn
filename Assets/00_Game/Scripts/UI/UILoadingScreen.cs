@@ -1,14 +1,12 @@
-﻿using UnityEngine.UI;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 
-public class UILoadingScreen : MonoBehaviourSingleton<UILoadingScreen>
+public class UILoadingScreen : MonoBehaviour
 {
     public Text loadingText;
-
-    public override void Awake()
-    {
-        base.Awake();        
-    }
 
     public void SetVisible(bool show)
     {
@@ -20,6 +18,6 @@ public class UILoadingScreen : MonoBehaviourSingleton<UILoadingScreen>
         int loadingVal = (int)(LoaderManager.Get().loadingProgress * 100);
         loadingText.text = "Loading " + loadingVal;
         if (LoaderManager.Get().loadingProgress >= 1)
-            SetVisible(false);
+            Destroy(this.gameObject);
     }
 }

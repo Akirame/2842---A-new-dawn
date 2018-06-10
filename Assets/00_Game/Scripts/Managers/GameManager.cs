@@ -23,6 +23,15 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
             Debug.Log("end");
     }
 
+    public bool Playing()
+    {
+        if (LoaderManager.Get().OnLevel())
+        {
+            return true;
+        }
+        else
+            return false;
+    }
     public int GetRange()
     {
         return shootRange;
@@ -83,5 +92,5 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
             return true;
         }
         return false;
-   }
+    }
 }

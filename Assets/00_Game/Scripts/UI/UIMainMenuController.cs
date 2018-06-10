@@ -11,6 +11,7 @@ public class UIMainMenuController : MonoBehaviour {
 
     private Animator anim;
     private bool onStart;
+    private bool selected;
 
     private void Start()
     {
@@ -18,6 +19,7 @@ public class UIMainMenuController : MonoBehaviour {
         imageStart.SetActive(true);
         imageExit.SetActive(false);
         onStart = true;
+        selected = false;
     }
 
     private void Update()
@@ -39,10 +41,11 @@ public class UIMainMenuController : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.J))
         {
-            if (onStart)
+            if (onStart && !selected)
             {
                 anim.SetBool("Select", true);
                 StartCoroutine(ChangeScene("Level1"));
+                selected = true;
             }
             else
             {

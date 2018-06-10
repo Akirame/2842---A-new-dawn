@@ -23,7 +23,7 @@ public class LevelEnd : MonoBehaviour {
                     LoaderManager.Get().LoadScene("Level2");
                     break;
                 case Scenes.FINAL:
-                    LoaderManager.Get().LoadScene("FinalMenu");
+                    LoaderManager.Get().LoadScene("FinalScreen");
                     break;
             }
         }

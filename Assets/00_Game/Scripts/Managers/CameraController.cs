@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviourSingleton<CameraController> {
 
     void Update()
     {
-        if (LoaderManager.Get().OnLevel())
+        if (GameManager.Get().Playing())
         {
             transform.position += new Vector3(0, speed * Time.deltaTime, 0);
             cam.ViewportToScreenPoint(transform.position);
