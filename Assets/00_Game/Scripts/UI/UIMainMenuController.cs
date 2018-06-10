@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenuController : MonoBehaviour {
+public class UIMainMenuController : MonoBehaviour {
 
     public GameObject imageStart;
     public GameObject imageExit;
@@ -23,7 +23,7 @@ public class MainMenuController : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.S) && onStart)
         {
-            AudioSource.PlayClipAtPoint(audioMove, cam.transform.position, 1f);
+            AudioSource.PlayClipAtPoint(audioMove, cam.transform.position, 0.70f);
             imageStart.SetActive(false);
             imageExit.SetActive(true);
             onStart = false;
@@ -40,7 +40,7 @@ public class MainMenuController : MonoBehaviour {
         {
             if (onStart)
             {
-                StartCoroutine(ChangeScene(1));
+                StartCoroutine(ChangeScene("Level1"));
             }
             else
             {
@@ -48,10 +48,10 @@ public class MainMenuController : MonoBehaviour {
             }
         }
     }
-        IEnumerator ChangeScene(int indexScene)
+        IEnumerator ChangeScene(string sceneName)
         {
             AudioSource.PlayClipAtPoint(audioSelect, cam.transform.position, 1f);
             yield return new WaitForSeconds(2);
-            UnityEngine.SceneManagement.SceneManager.LoadScene(indexScene);
+            LoaderManager.Get().LoadScene(sceneName);
         }
 }

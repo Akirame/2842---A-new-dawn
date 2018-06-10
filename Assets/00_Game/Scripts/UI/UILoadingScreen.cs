@@ -7,8 +7,7 @@ public class UILoadingScreen : MonoBehaviourSingleton<UILoadingScreen>
 
     public override void Awake()
     {
-        base.Awake();
-        gameObject.SetActive(false);
+        base.Awake();        
     }
 
     public void SetVisible(bool show)

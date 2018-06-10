@@ -4,14 +4,14 @@ using UnityEngine.SceneManagement;
 
 public class LoaderManager : MonoBehaviourSingleton<LoaderManager>
 {
-    public float loadingProgress;    
+    public float loadingProgress;
     public float timeLoading;
     public float minTimeToLoad = 2;
 
     public void LoadScene(string sceneName)
     {
-            SceneManager.LoadScene("LoadingScreen");
-            StartCoroutine(AsynchronousLoad(sceneName));  
+        SceneManager.LoadScene("LoadingScreen");
+        StartCoroutine(AsynchronousLoad(sceneName));
     }
 
     IEnumerator AsynchronousLoad(string scene)
