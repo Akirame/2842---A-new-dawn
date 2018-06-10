@@ -8,12 +8,24 @@ public class LoaderManager : MonoBehaviourSingleton<LoaderManager>
     public float timeLoading;
     public float minTimeToLoad = 2;
 
+    private Scene currentScene;
+
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene("LoadingScreen");
         StartCoroutine(AsynchronousLoad(sceneName));
     }
+    public bool OnLevel()
+    {
+        currentScene = SceneManager.GetActiveScene();
 
+        if (currentScene.name == "Level1" || currentScene.name == "Level2")
+        {
+            return true;
+        }
+        else
+            return false;
+    }
     IEnumerator AsynchronousLoad(string scene)
     {
         loadingProgress = 0;

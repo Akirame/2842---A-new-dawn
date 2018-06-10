@@ -15,8 +15,12 @@ public class CameraController : MonoBehaviourSingleton<CameraController> {
 
     void Update()
     {
-        transform.position += new Vector3(0, speed * Time.deltaTime, 0);
-        cam.ViewportToScreenPoint(transform.position);
+        if (LoaderManager.Get().OnLevel())
+        {
+            transform.position += new Vector3(0, speed * Time.deltaTime, 0);
+            cam.ViewportToScreenPoint(transform.position);
+        }
+
     }
     public float GetSpeed()
     {
