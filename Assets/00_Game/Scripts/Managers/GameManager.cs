@@ -34,7 +34,10 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public void AddRange()
     {
         if (shootRange < 4)
+        {
             shootRange++;
+            Debug.Log(shootRange);
+        }
         else
             AddScore(100);
     }

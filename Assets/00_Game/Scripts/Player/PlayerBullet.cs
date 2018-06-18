@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class PlayerBullet : MonoBehaviour
 {
-    public float speed;    
+    public float speed;
 
+    private void Start()
+    {
+        transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, Random.Range(-10, 10)));
+    }
     private void Update()
     {
         OffCamera();
-        transform.position += new Vector3(0, speed * Time.deltaTime, 0);
-                
+        transform.position += transform.up * speed * Time.deltaTime;
+        
     }
     private void OffCamera()
     {

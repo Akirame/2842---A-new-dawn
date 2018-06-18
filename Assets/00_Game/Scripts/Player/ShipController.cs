@@ -46,10 +46,10 @@ public class ShipController : MonoBehaviourSingleton<ShipController>
         if (Input.GetKeyDown(KeyCode.J))
         {
             shootSound.PlayOneShot(shootSound.clip, 0.50f);
-            for (int i = 0; i < GameManager.Get().GetRange(); i++)
+            Instantiate(bullet, bulletStartPos, Quaternion.identity, BulletGroup.Get().transform);
+            if (GameManager.Get().GetRange() >= 2)
             {
-                Instantiate(bullet, bulletStartPos, Quaternion.identity, BulletGroup.Get().transform);
-                if (GameManager.Get().GetRange() > 1)
+                for (int i = 1; i < GameManager.Get().GetRange(); i++)
                 {
                     Vector3 bulletRangePos = new Vector3(i * bulletSpacing, 0);
                     Instantiate(bullet, (bulletStartPos + bulletRangePos), Quaternion.identity, BulletGroup.Get().transform);
@@ -92,7 +92,7 @@ public class ShipController : MonoBehaviourSingleton<ShipController>
         SpriteRenderer spr = GetComponent<SpriteRenderer>();
         spr.gameObject.SetActive(true);
         BoxCollider2D collider = GetComponent<BoxCollider2D>();
-        collider.gameObject.SetActive(true);        
+        collider.gameObject.SetActive(true);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

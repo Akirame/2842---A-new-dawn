@@ -44,19 +44,7 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
     }
     private void DrawScoreText()
     {
-        int scoreAux = GameManager.Get().GetScore();
-        if (scoreAux <= 0)
-            scoreText.text = ("000000" + GameManager.Get().GetScore());
-        else if (scoreAux > 0 && scoreAux < 1000)
-            scoreText.text = ("0000" + GameManager.Get().GetScore());
-        else if (scoreAux >= 1000 && scoreAux < 10000)
-            scoreText.text = ("000" + GameManager.Get().GetScore());
-        else if (scoreAux >= 10000 && scoreAux < 100000)
-            scoreText.text = ("00" + GameManager.Get().GetScore());
-        else if (scoreAux >= 100000 && scoreAux < 100000)
-            scoreText.text = ("0" + GameManager.Get().GetScore());
-        else if (scoreAux >= 100000)
-            scoreText.text = GameManager.Get().GetScore().ToString();
+        scoreText.text = GameManager.Get().GetScore().ToString("0000000");
     }
     /// <summary>
     /// Si la cantidad de bombas cambió, actualiza el texto.
