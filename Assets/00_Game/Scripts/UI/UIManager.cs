@@ -51,6 +51,12 @@ public class UIManager : MonoBehaviourSingleton<UIManager>
             scoreText.text = ("0000" + GameManager.Get().GetScore());
         else if (scoreAux >= 1000 && scoreAux < 10000)
             scoreText.text = ("000" + GameManager.Get().GetScore());
+        else if (scoreAux >= 10000 && scoreAux < 100000)
+            scoreText.text = ("00" + GameManager.Get().GetScore());
+        else if (scoreAux >= 100000 && scoreAux < 100000)
+            scoreText.text = ("0" + GameManager.Get().GetScore());
+        else if (scoreAux >= 100000)
+            scoreText.text = GameManager.Get().GetScore().ToString();
     }
     /// <summary>
     /// Si la cantidad de bombas cambió, actualiza el texto.
